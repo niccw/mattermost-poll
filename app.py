@@ -12,7 +12,7 @@ from formatters import format_help, format_poll, format_user_vote
 from mattermost_api import user_locale
 import settings
 
-from lunch import Lunch
+from lunch import Lunch, InvalidLunchError
 import random
 
 
