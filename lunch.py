@@ -52,5 +52,4 @@ class Lunch(object):
 
 class InvalidLunchError(Exception):
     """Raised when Lunch creation or loading failed."""
-    print("Lunch creation or loading failed.")
     pass
