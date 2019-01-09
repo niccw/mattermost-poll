@@ -12,6 +12,9 @@ from formatters import format_help, format_poll, format_user_vote
 from mattermost_api import user_locale
 import settings
 
+from lunch import Lunch
+import random
+
 
 app = Flask(__name__)
 app.logger.propagate = True
@@ -60,6 +63,13 @@ def parse_slash_command(command):
     bars = settings.BARS_BY_DEFAULT
     locale = ''
     max_votes = 1
+
+    # lunch params
+    lunch = False
+    lunchadd = False
+    lunchrm = False
+    lunchls = False
+
     for arg in args[1:]:
         if arg == 'secret' or arg == 'noprogress':
             progress = False
@@ -84,14 +94,27 @@ def parse_slash_command(command):
                 max_votes = max(1, int(max_votes_str))
             except ValueError:
                 pass
+
+        # lunch flags
+        # start lunch vote
+        elif arg == 'lunch': 
+            lunch = True
+        elif arg == 'lunchadd':
+            lunchadd = True
+        elif arg == 'lunchrm':
+            lunchrm = True
+        elif arg == 'lunchls':
+            lunchls == True
+        
         else:
             vote_options.append(arg)
 
     Arguments = namedtuple('Arguments', ['message', 'vote_options',
                                          'progress', 'public', 'max_votes',
-                                         'bars', 'locale'])
+                                         'bars', 'locale','lunch','lunchadd','lunchrm','lunchls'])
     return Arguments(message, vote_options, progress,
-                     public, max_votes, bars, locale)
+                     public, max_votes, bars, locale,
+                     lunch, lunchadd, lunchrm, lunchls)
 
 
 @babel.localeselector
@@ -197,6 +220,7 @@ def poll():
         })
 
     args = parse_slash_command(request.form['text'])
+
     if not args.message:
         text = tr("**Please provide a message.**\n\n"
                   "**Usage:**\n{help}").format(
@@ -216,6 +240,52 @@ def poll():
 
     if args.locale:
         locale = args.locale
+
+    # lunch
+    # built new message and vote_options
+    if args.lunch:
+        lunch = Lunch()
+        restaurants = lunch.read_restaurant()
+        try:
+            num_restaurant = int(args.message)
+        except:
+            return jsonify({"ephemeral_text":tr("Please provide a number.")})
+        restaurants_subset = random(restaurants,num_restaurant)
+        new_vote_options = restaurants_subset
+        new_message = "Let's vote for lunch!"
+        
+        args_dict = args._asdict()
+        args_dict["message"] = new_message
+        args_dict["vote_options"] =  new_vote_options
+        
+        # copy from parse_slash_command
+        Arguments = namedtuple('Arguments', ['message', 'vote_options',
+                                         'progress', 'public', 'max_votes',
+                                         'bars', 'locale','lunch','lunchadd','lunchrm','lunchls'])
+        
+        args = Arguments(**args_dict)
+
+    if args.lunchadd:
+        lunch = Lunch()
+        flag = lunch.add_restaurant(author_id=user_id,restaurant=args.message)
+        if flag:
+            return jsonify({"ephemeral_text":tr("Successfully added restaurant.")})
+        else:
+            return jsonify({"ephemeral_text":tr("Error in adding restaurant.")})
+    if args.lunchrm:
+        lunch = Lunch()
+        flag = lunch.rm_restaurant(args.message)
+        if flag:
+            return jsonify({"ephemeral_text":tr("Successfully removed restaurant.")})
+        else:
+            return jsonify({"ephemeral_text":tr("Error in removing restaurant.")})
+    if args.lunchls:
+        lunch = Lunch()
+        restaurants = lunch.read_restaurant()
+        restaurants_str = ",".join(restaurants)
+        return jsonify({"ephemeral_text":restaurants_str})
+
+    
 
     poll = Poll.create(user_id,
                        message=args.message,

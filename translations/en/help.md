@@ -19,8 +19,13 @@ Additionally there are some special options that change the appearance and/or be
 - `--bars`: Show results as a bar chart at the end of the poll.
 - `--nobars`: Don't show the bar chart at the end of the poll.
 - `--locale=X`: Use a specific locale for the poll. Supported values are en and de. By default your account language is used.
+- `--lunch [int]`: Start a lunch vote with n options.
+- `--lunchadd [restaurant]`: Add a restaurant to databse.
+- `--lunchrm [restaurant]`: Remove a restaurant from database.
+- `--lunchls`: List all restaurants.
 
 Each of these options is case sensitive and must appear alone, e.g.:
 ```
 {command} Please place your orders --Pizza --Burger --Fries --public --votes=3
+{command} --lunch 3
 ```

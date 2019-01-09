@@ -162,7 +162,8 @@ class Poll:
         Raise a InvalidPollError if no poll with that id
         exists.
         """
-        con = sqlite3.connect(settings.DATABASE)
+        con = 
+        .connect(settings.DATABASE)
         return cls(con, id)
 
     def num_votes(self):
