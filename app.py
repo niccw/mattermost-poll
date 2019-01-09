@@ -221,7 +221,7 @@ def poll():
     args = parse_slash_command(request.form['text'])
 
     #debug
-    return jsonify({'response_type': 'ephemeral', 'text': str(args.progress)+str(args.lunch)+str(args.message)})
+    #return jsonify({'response_type': 'ephemeral', 'text': str(args.progress)+str(args.lunch)+str(args.message)})
 
     # lunch
     # built new message and vote_options
@@ -245,27 +245,26 @@ def poll():
                                          'bars', 'locale','lunch','lunchadd','lunchrm','lunchls'])
         
         args = Arguments(**args_dict)
-        return jsonify({'ephemeral_text':tr("inside lunch")})
 
     if args.lunchadd:
         lunch = Lunch()
         flag = lunch.add_restaurant(author_id=user_id,restaurant=args.message)
         if flag:
-            return jsonify({'ephemeral_text':tr("Successfully added restaurant.")})
+            return jsonify({'response_type': 'ephemeral','text':tr("Successfully added restaurant.")})
         else:
-            return jsonify({'ephemeral_text':tr("Error in adding restaurant.")})
+            return jsonify({'response_type': 'ephemeral','text':tr("Error in adding restaurant.")})
     if args.lunchrm:
         lunch = Lunch()
         flag = lunch.rm_restaurant(args.message)
         if flag:
-            return jsonify({'ephemeral_text':tr("Successfully removed restaurant.")})
+            return jsonify({'response_type': 'ephemeral','text':tr("Successfully removed restaurant.")})
         else:
-            return jsonify({'ephemeral_text':tr("Error in removing restaurant.")})
+            return jsonify({'response_type': 'ephemeral','text':tr("Error in removing restaurant.")})
     if args.lunchls:
         lunch = Lunch()
         restaurants = lunch.read_restaurant()
         restaurants_str = ",".join(restaurants)
-        return jsonify({'ephemeral_text':restaurants_str})
+        return jsonify({'response_type': 'ephemeral','text':restaurants_str})
 
 
     if not args.message:
