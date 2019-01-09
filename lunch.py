@@ -32,7 +32,7 @@ class Lunch(object):
         self.init_lunch_database()
         cur = con.cursor()
         try:
-            cur.execute("""DELETE FROM Lunch WHERE restaurant=(?)""",(restaurant))
+            cur.execute("""DELETE FROM Lunch WHERE restaurant=(?)""",(restaurant,))
             con.commit()
             return True
         except sqlite3.Error as e:
