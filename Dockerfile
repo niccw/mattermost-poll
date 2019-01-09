@@ -1,7 +1,7 @@
 FROM python:alpine
 
 ARG port=5000
-ARG mattermost_url=""
+ARG mattermost_url="http://localhost:8065"
 ARG mattermost_tokens=""
 ARG mattermost_pa_token=""
 
@@ -13,7 +13,8 @@ EXPOSE $port
 RUN mkdir app
 WORKDIR app
 COPY *.py ./
-COPY help.md ./
+#COPY help.md ./
+COPY translations ./translations
 COPY settings.py.example settings.py
 RUN mkdir volume && \
 	sed -i "s^\(DATABASE\s*=\s*\).*^\1'volume/poll.db'^" settings.py && \
