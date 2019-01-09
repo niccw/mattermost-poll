@@ -69,6 +69,7 @@ def parse_slash_command(command):
     lunchadd = False
     lunchrm = False
     lunchls = False
+    bars = True
 
     for arg in args[1:]:
         if arg == 'secret' or arg == 'noprogress':
