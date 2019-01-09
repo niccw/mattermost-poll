@@ -13,7 +13,7 @@ from mattermost_api import user_locale
 import settings
 
 from lunch import Lunch, InvalidLunchError
-from random import random
+import random
 
 
 app = Flask(__name__)
@@ -232,7 +232,7 @@ def poll():
             num_restaurant = int(args.message)
         except:
             return jsonify({'ephemeral_text':tr("Please provide a number.")})
-        restaurants_subset = random(restaurants,num_restaurant)
+        restaurants_subset = random.sample(restaurants,num_restaurant)
         new_vote_options = restaurants_subset
         
         args_dict = args._asdict()
@@ -248,8 +248,7 @@ def poll():
 
     if args.lunchadd:
         lunch = Lunch()
-        return jsonify({'response_type': 'ephemeral', 'text': str(user_id)+str(args.message)})
-        #flag = lunch.add_restaurant(author_id=user_id,restaurant=args.message)
+        flag = lunch.add_restaurant(author_id=user_id,restaurant=args.message)
         if flag:  
             return jsonify({'response_type': 'ephemeral','text':tr("Successfully added restaurant.")})
         else:
