@@ -243,7 +243,7 @@ def poll():
                                          'bars', 'locale','lunch','lunchadd','lunchrm','lunchls'])
         
         args = Arguments(**args_dict)
-        return jsonify({"ephemeral_text":tr(args.message)})
+        return jsonify({"ephemeral_text":tr("inside lunch")})
 
 
     if args.lunchadd:
