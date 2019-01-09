@@ -13,7 +13,7 @@ from mattermost_api import user_locale
 import settings
 
 from lunch import Lunch, InvalidLunchError
-import random
+from random import random
 
 
 app = Flask(__name__)
