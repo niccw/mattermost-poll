@@ -10,7 +10,7 @@ class Lunch(object):
         cur = con.cursor()
         cur.execute("""PRAGMA user_version = 1""")
         cur.execute("""CREATE TABLE IF NOT EXISTS Lunch (
-                    author_id text PRIMARY KEY,
+                    author_id text NOT NULL,
                     restaurant text NOT NULL)""")
         con.commit()
 
