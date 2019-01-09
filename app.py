@@ -232,11 +232,10 @@ def poll():
             return jsonify({"ephemeral_text":tr("Please provide a number.")})
         restaurants_subset = random(restaurants,num_restaurant)
         new_vote_options = restaurants_subset
-        new_message = "Let's vote for lunch!"
         
         args_dict = args._asdict()
-        args_dict["message"] = new_message
-        args_dict["vote_options"] =  new_vote_options
+        args_dict['message'] = "Let's vote for lunch!"
+        args_dict['vote_options'] =  new_vote_options
         
         # copy from parse_slash_command
         Arguments = namedtuple('Arguments', ['message', 'vote_options',
@@ -244,6 +243,8 @@ def poll():
                                          'bars', 'locale','lunch','lunchadd','lunchrm','lunchls'])
         
         args = Arguments(**args_dict)
+        return jsonify({"ephemeral_text":tr(args.message)})
+
 
     if args.lunchadd:
         lunch = Lunch()
