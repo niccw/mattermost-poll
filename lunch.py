@@ -20,6 +20,7 @@ class Lunch(object):
         cur = con.cursor()
         try:
             cur.execute("""INSERT INTO Lunch (author_id, restaurant) VALUES (?,?)""", (author_id, restaurant))
+            con.commit()
             return True
         except sqlite3.Error as e:
             raise InvalidLunchError
@@ -32,6 +33,7 @@ class Lunch(object):
         cur = con.cursor()
         try:
             cur.execute("""DELETE FROM Lunch WHERE restaurant=?""",(restaurant))
+            con.commit()
             return True
         except sqlite3.Error as e:
             raise InvalidLunchError
