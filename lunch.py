@@ -37,7 +37,7 @@ class Lunch(object):
             return True
         except sqlite3.Error as e:
             raise InvalidLunchError
-            print(e)
+            print(e+";"+"restaurant:"+restaurant)
             return False
 
  
