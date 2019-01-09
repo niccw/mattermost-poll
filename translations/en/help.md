@@ -27,5 +27,11 @@ Additionally there are some special options that change the appearance and/or be
 Each of these options is case sensitive and must appear alone, e.g.:
 ```
 {command} Please place your orders --Pizza --Burger --Fries --public --votes=3
+```
+
+Lunch poll command:
+```
 {command} 3 --lunch
+{command} --lunchls
+{command} pho --lunchadd
 ```
