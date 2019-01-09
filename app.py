@@ -248,7 +248,7 @@ def poll():
 
     if args.lunchadd:
         lunch = Lunch()
-        return jsonify({'response_type': 'ephemeral', 'text': str(author_id)+str(restaurant)})
+        return jsonify({'response_type': 'ephemeral', 'text': str(user_id)+str(args.message)})
         #flag = lunch.add_restaurant(author_id=user_id,restaurant=args.message)
         if flag:  
             return jsonify({'response_type': 'ephemeral','text':tr("Successfully added restaurant.")})
