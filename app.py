@@ -221,7 +221,7 @@ def poll():
     args = parse_slash_command(request.form['text'])
 
     #debug
-    return jsonify({'ephemeral_text': str(args.progress)+str(args.lunch)+str(args.message)})
+    return jsonify({'response_type': 'ephemeral', 'text': str(args.progress)+str(args.lunch)+str(args.message)})
 
     # lunch
     # built new message and vote_options
