@@ -18,7 +18,6 @@ class Lunch(object):
         con = sqlite3.connect(self.db)
         self.init_lunch_database()
         cur = con.cursor()
-        return jsonify({'response_type': 'ephemeral', 'text': str(author_id)+str(restaurant)})
         try:
             cur.execute("""INSERT INTO Lunch (author_id, restaurant) VALUES (?,?)""", (author_id, restaurant))
             return True
