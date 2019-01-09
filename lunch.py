@@ -2,7 +2,7 @@ import sqlite3
 
 class Lunch(object):
     def __init__(self):
-        self.db = "Lunch"
+        self.db = "Lunch.db"
 
     def init_lunch_database(self):
         con = sqlite3.connect(self.db)
