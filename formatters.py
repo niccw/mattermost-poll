@@ -136,7 +136,7 @@ def _format_vote_end_text(poll, vote_id):
     text = ''
 
     if poll.bars:
-        png_path = url_for('send_img', filename="bar.png", _external=True)
+        png_path = url_for('send_img', filename="img/bar.png", _external=True)
         bar_min_width = 2  # even 0% should show a tiny bar
         bar_width = 450*rel_vote_count/100 + bar_min_width
         text += '![Bar]({} ={}x25) '.format(png_path, bar_width)
