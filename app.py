@@ -104,7 +104,7 @@ def parse_slash_command(command):
         elif arg == 'lunchrm':
             lunchrm = True
         elif arg == 'lunchls':
-            lunchls == True
+            lunchls = True
         
         else:
             vote_options.append(arg)
