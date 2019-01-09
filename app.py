@@ -255,7 +255,6 @@ def poll():
             return jsonify({'response_type': 'ephemeral','text':tr("Error in adding restaurant.")})
     if args.lunchrm:
         lunch = Lunch()
-        print(args.message)
         flag = lunch.rm_restaurant(args.message)
         if flag:
             return jsonify({'response_type': 'ephemeral','text':tr("Successfully removed restaurant.")})
