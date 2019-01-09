@@ -221,26 +221,6 @@ def poll():
 
     args = parse_slash_command(request.form['text'])
 
-    if not args.message:
-        text = tr("**Please provide a message.**\n\n"
-                  "**Usage:**\n{help}").format(
-                      help=format_help(request.form['command'], locale))
-        return jsonify({
-            'response_type': 'ephemeral',
-            'text': text
-        })
-    if args.public:
-        if not settings.MATTERMOST_URL or not settings.MATTERMOST_PA_TOKEN:
-            return jsonify({
-                'response_type': 'ephemeral',
-                'text': tr("Public polls are not available with the "
-                           "current setup. Please check with you "
-                           "system administrator.")
-            })
-
-    if args.locale:
-        locale = args.locale
-
     # lunch
     # built new message and vote_options
     if args.lunch:
@@ -285,7 +265,27 @@ def poll():
         restaurants_str = ",".join(restaurants)
         return jsonify({"ephemeral_text":restaurants_str})
 
-    
+
+    if not args.message:
+        text = tr("**Please provide a message.**\n\n"
+                  "**Usage:**\n{help}").format(
+                      help=format_help(request.form['command'], locale))
+        return jsonify({
+            'response_type': 'ephemeral',
+            'text': text
+        })
+    if args.public:
+        if not settings.MATTERMOST_URL or not settings.MATTERMOST_PA_TOKEN:
+            return jsonify({
+                'response_type': 'ephemeral',
+                'text': tr("Public polls are not available with the "
+                           "current setup. Please check with you "
+                           "system administrator.")
+            })
+
+    if args.locale:
+        locale = args.locale
+
 
     poll = Poll.create(user_id,
                        message=args.message,
