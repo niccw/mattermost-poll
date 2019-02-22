@@ -232,7 +232,8 @@ def poll():
         try:
             num_restaurant = int(args.message)
         except:
-            return jsonify({'ephemeral_text':tr("Please provide a number.")})
+            num_restaurant =  len(restaurants) # if no number is provider as a message, just list all restautrant in the db
+            #return jsonify({'ephemeral_text':tr("Please provide a number.")})
         restaurants_subset = random.sample(restaurants,num_restaurant)
         new_vote_options = restaurants_subset
         
